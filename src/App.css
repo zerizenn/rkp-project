@@ -1,0 +1,86 @@
+#clinic {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+#clinic h1 {
+  text-align: center;
+}
+
+#clinic h2 {
+  margin-top: 40px;
+}
+
+.visit-form {
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-legend {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-h);
+}
+
+.visit-form label {
+  display: inline-block;
+  margin-right: 16px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.visit-form input,
+.visit-form select {
+  display: block;
+  margin-top: 4px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.add-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background: #39d45d;
+  color: #fff;
+  cursor: pointer;
+}
+
+.delete-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background: #d73333;
+  color: #fff;
+  cursor: pointer;
+}
+
+.visits-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.visits-table th,
+.visits-table td {
+  padding: 10px;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.visits-table th {
+  color: var(--text-h);
+}
