@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import VisitForm from './components/visitForm'
-import VisitTable from './components/visitTable'
+import VisitForm from './components/VisitForm'
+import VisitTable from './components/VisitTable'
 import './App.css'
 
 const initialVisits = [

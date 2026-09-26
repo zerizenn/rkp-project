@@ -21,7 +21,7 @@ const visits = [
   },
 ]
 
-function VisitTable() {
+function VisitTable({ visits, onDeleteVisit }) {
   return (
     <table className="visits-table">
       <thead>
@@ -37,9 +37,17 @@ function VisitTable() {
         </tr>
       </thead>
       <tbody>
-        {visits.map((visit, index) => (
-          <VisitRow key={visit.id} visit={visit} rowNumber={index + 1} />
-        ))}
+        {visits.length === 0 ? (
+          <tr>
+            <td colSpan="8" style={{ textAlign: 'center' }}>
+              Пока нет ни одного приёма
+            </td>
+          </tr>
+        ) : (
+          visits.map((visit, index) => (
+            <VisitRow key={visit.id} visit={visit} rowNumber={index + 1} onDeleteVisit={onDeleteVisit}/>
+          ))
+        )}
       </tbody>
     </table>
   )

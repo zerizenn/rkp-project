@@ -1,4 +1,4 @@
-function VisitRow({ visit, rowNumber }) {
+function VisitRow({ visit, rowNumber, onDeleteVisit  }) {
   return (
     <tr>
       <td>{rowNumber}</td>
@@ -9,7 +9,7 @@ function VisitRow({ visit, rowNumber }) {
       <td>{visit.ownerPhone}</td>
       <td>{visit.doctorName}</td>
       <td>
-        <button type="button" className="delete-btn">
+        <button type="button" className="delete-btn" onClick={() => onDeleteVisit(visit.id)}>
           Удалить
         </button>
       </td>
