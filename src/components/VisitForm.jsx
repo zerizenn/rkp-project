@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import doctors from '../doctors'
 
 const emptyForm = {
   petName: '',
@@ -65,9 +66,11 @@ function VisitForm({ onAddVisit }) {
           Имя
           <select name="doctorName" value={form.doctorName} onChange={handleChange}>
             <option value="">Выберите врача</option>
-            <option value="Смирнова А.В.">Смирнова А.В.</option>
-            <option value="Кузнецов Д.С.">Кузнецов Д.С.</option>
-            <option value="Смирнов И.Д.">Смирнов И.Д.</option>
+            {doctors.map((doctor) => (
+              <option key={doctor} value={doctor}>
+                {doctor}
+              </option>
+            ))}
           </select>
         </label>
       </div>
