@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import doctors from '../doctors'
+import { useSelector } from 'react-redux'
 import Spinner from './Spinner'
 
 const emptyForm = {
@@ -12,13 +12,7 @@ const emptyForm = {
 }
 
 function VisitForm({ onAddVisit }) {
-  const [form, setForm] = useState(emptyForm)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const submitTimeout = useRef(null)
-
-  useEffect(() => {
-    return () => window.clearTimeout(submitTimeout.current)
-  }, [])
+     const [form, setForm] = useState(emptyForm)
 
   function handleChange(event) {
     const { name, value } = event.target
@@ -38,8 +32,13 @@ function VisitForm({ onAddVisit }) {
     setIsSubmitting(true)
     submitTimeout.current = window.setTimeout(() => {
       onAddVisit(form)
-      setForm(emptyForm)
-      setIsSubmitting(false)
+        .then(() => setForm(emptyForm))
+        .catch((error) => {
+          const message =
+            error?.message ?? 'Не удалось добавить приём. Попробуйте ещё раз.'
+          alert(message)
+        })
+        .finally(() => setIsSubmitting(false))
     }, 500)
   }
 
@@ -77,8 +76,10 @@ function VisitForm({ onAddVisit }) {
         <span className="form-legend">Врач</span>
         <label>
           Имя
-          <select name="doctorName" value={form.doctorName} onChange={handleChange} disabled={isSubmitting}>
-            <option value="">Выберите врача</option>
+          <select name="doctorName" value={form.doctorName} onChange={handleChange} disabled={isSubmitting || !doctorsLoaded}>
+            <option value="">
+              {doctorsLoading ? 'Загрузка врачей...' : 'Выберите врача'}
+            </option>
             {doctors.map((doctor) => (
               <option key={doctor} value={doctor}>
                 {doctor}
