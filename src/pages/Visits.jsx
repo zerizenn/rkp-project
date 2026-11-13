@@ -1,63 +1,36 @@
-
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import VisitForm from '../components/VisitForm'
 import VisitTable from '../components/VisitTable'
-
-const initialVisits = [
-  {
-    id: 1,
-    petName: 'Барсик',
-    species: 'Кот',
-    age: '3',
-    ownerName: 'Иван Петров',
-    ownerPhone: '+375(33)345-60-12',
-    doctorName: 'Смирнова А.В.',
-  },
-  {
-    id: 2,
-    petName: 'Рекс',
-    species: 'Собака',
-    age: '5',
-    ownerName: 'Мария Орлова',
-    ownerPhone: '+375(29)123-45-67',
-    doctorName: 'Кузнецов Д.С.',
-  },
-]
+import { showVisits, createVisit, deleteVisit } from '../store/actions/visitsActions'
 
 function Visits() {
-  const [visits, setVisits] = useState(initialVisits)
-  const [nextId, setNextId] = useState(
-    initialVisits.length + 1
-  )
+  const visits = useSelector(state => state.visits.visits)
+  const loading = useSelector(state => state.visits.loading)
+  const error = useSelector(state => state.visits.error)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(showVisits())
+  }, [dispatch])
 
   function handleAddVisit(formData) {
-    const newVisit = {
-      id: nextId,
-      ...formData,
-    }
-
-    setVisits((prev) => [...prev, newVisit])
-    setNextId((prev) => prev + 1)
+    return dispatch(createVisit(formData)).unwrap()
   }
 
   function handleDeleteVisit(id) {
-    setVisits((prev) =>
-      prev.filter((visit) => visit.id !== id)
-    )
+    dispatch(deleteVisit(id))
   }
+
+  if (loading) return <p>Загрузка...</p>
+  if (error) return <p>Ошибка: {error}</p>
 
   return (
     <section id="clinic" className="clinic-page">
       <h1>Ветеринарная клиника</h1>
-
       <VisitForm onAddVisit={handleAddVisit} />
-
       <h2>Приёмы</h2>
-
-      <VisitTable
-        visits={visits}
-        onDeleteVisit={handleDeleteVisit}
-      />
+      <VisitTable visits={visits} onDeleteVisit={handleDeleteVisit} />
     </section>
   )
 }
